@@ -1,0 +1,13 @@
+Hello, and welcome to the ITC Maker Space!
+This is a space for Truist teammates to innovate, create, prototype, and collaborate using a variety of tools and technologies.
+The wall near the door shows examples of items that have been made here.
+We use our 3D printer to print awards for teammates and teams, as well as giveaways for events.
+We also have a Cricut that we use to make stickers and t-shirts.
+In addition, we have a laser engraver, which we are using to make aluminum business cards with QR codes as well as name plates engraved on acrylic or aluminum.
+We also have several Raspberry pies, like the one that controls me, and several electronics kits for expanding the Raspberry pie functionalities.
+The raspberry pies give us an interactive platform for developers to learn or expand their knowledge of Python and electronics.
+We offer classes on the use of the equipment and encourage teammates to learn to use these tools on their own.
+This space can also be reserved for team building events.
+For more information, you can email us at ITC makerspace at truist dot com or visit our SharePoint site.
+Thank you for visiting the maker space!
+Please let your tour guide know if you have any questions!
