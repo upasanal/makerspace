@@ -15,13 +15,13 @@ Make sure you have Python 3+ installed. You can download it from [python.org](ht
 
 
 
-     https://github.com/oneteamAvery/makerspace_tour.git
+     git clone https://github.com/oneteamAvery/makerspace_tour.git
 
 
 ## Setting up virtual environment
 1. **Create the environment**
 
-Run the following command to create a virtual environment. You can name it venv or choose a different name.
+Navigate to the project directory and run the following command to create a virtual environment. You can name it venv or choose a different name.
 
    
     python -m venv venv
