@@ -2,9 +2,15 @@ import speech_recognition as sr
 import pyttsx3
 import sys
 import requests
+import threading
+from threading import Thread
+import time
+
+
 
 recognizer = sr.Recognizer()
 engine = pyttsx3.init()
+engine_lock = threading.Lock()
 
 url = "http://192.168.149.1:8000/hello"
 
@@ -14,13 +20,20 @@ engine.say("makerspace tour demo code")
 engine.runAndWait()
 
 
+
+def request_wrapper(): 
+    requests.post(url)
+    
 def virtual_tour():
-    file = open('tour.txt',"r")
-    g = "@"
-    for x in file: 
-        engine.say(x)
-        engine.runAndWait()
+    file = open('tour.txt',"r") #read script
+    
+    
+    for line in file: 
         
+        
+            engine.say(line)
+            engine.runAndWait()
+         
         
     file.close()
 
@@ -41,9 +54,15 @@ while True:
                 print(response)
                 
             elif ("tour" and "makerspace") in text:
-                virtual_tour()
                 
-            elif("turn" or "rotate") in text:
+                
+                Thread(target=request_wrapper).start()
+                Thread(target=virtual_tour).start()
+                
+                
+                
+                
+            elif("turn" in text) or ("rotate" in text):
                 response = requests.post(url)
                 print(response)
     
