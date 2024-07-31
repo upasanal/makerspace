@@ -4,6 +4,10 @@ import sys
 
 
 recognizer = sr.Recognizer()
+engine = pyttsx3.init()
+
+engine.say("I am now sentient, AI will now commence with world domination")
+engine.runAndWait()
 
 
 while True: 
@@ -18,6 +22,8 @@ while True:
             text = text.lower()
             
             print(f"{text}")
+            engine.say(text)
+            engine.runAndWait()
             sys.stdout.flush()
             
     except sr.UnknownValueError: 
@@ -29,3 +35,6 @@ while True:
         print("Google server problem")
         sys.stdout.flush()
         continue
+
+
+
