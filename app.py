@@ -8,6 +8,8 @@ engine = pyttsx3.init()
 
 url = "http://192.168.149.1:8000/hello"
 
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[8].id)
 engine.say("makerspace tour demo code")
 engine.runAndWait()
 
@@ -15,9 +17,10 @@ engine.runAndWait()
 def virtual_tour():
     file = open('tour.txt',"r")
     g = "@"
-    for x in g: 
+    for x in file: 
         engine.say(x)
         engine.runAndWait()
+        
         
     file.close()
 
@@ -33,14 +36,19 @@ while True:
             text = recognizer.recognize_google(audio)
             text = text.lower()
             
-            if "hello" or "hi" in text:
+            if ("hello" or "hi") and "robot" in text:
                 response = requests.post(url)
                 print(response)
                 
-            if "tour" and "makerspace" in text:
+            elif ("tour" and "makerspace") in text:
                 virtual_tour()
                 
-            
+            elif("turn" or "rotate") in text:
+                response = requests.post(url)
+                print(response)
+    
+            else:
+                pass 
             print(f"{text}")
             sys.stdout.flush()
             
