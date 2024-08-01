@@ -1,7 +1,7 @@
 # Automated Makerspace Tour - Quickstart Quide
 
-This is a project aimed to automate the makerspace tour when Jake is not in the office. 
-The aim is to use speech recognition and basic http requests to communicate with the TonyPI robot.
+This is a project aimed to automate the makerspace tour when the makerspace is unmanned. 
+The aim is to use speech recognition and basic http (fastapi) requests to communicate with the TonyPI robot.
 
 ## Getting Started
 
