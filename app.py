@@ -87,7 +87,7 @@ def run_tour():
             continue
         
         except sr.RequestError as e: 
-            print("Google server problem")
+            print(e)
             sys.stdout.flush()
             continue
 
