@@ -36,6 +36,7 @@ Navigate to the project directory and run the following command to create a virt
      source venv/bin/activate
      
 After activation you should see `(venv)` or what ever name you set your virtual enviornment in your terminal prompt, this indicates that the environment is active.
+Small footnote (if you are using the most current version of python [3.12], you may have to install all dependencies one by one!)
 ## Installing Dependencies
 
      
