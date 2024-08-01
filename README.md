@@ -1,7 +1,7 @@
 # Automated Makerspace Tour - Quickstart Quide
 
-This is a project aimed to automate the makerspace tour when Jake is not in the office. 
-The aim is to use speech recognition and basic http requests to communicate with the TonyPI robot.
+This is a project aimed to automate the makerspace tour when the makerspace is unmanned. 
+The aim is to use speech recognition and basic http (fastapi) requests to communicate with the TonyPI robot.
 
 ## Getting Started
 
@@ -36,6 +36,7 @@ Navigate to the project directory and run the following command to create a virt
      source venv/bin/activate
      
 After activation you should see `(venv)` or what ever name you set your virtual enviornment in your terminal prompt, this indicates that the environment is active.
+Small footnote (if you are using the most current version of python [3.12], you may have to install all dependencies one by one!)
 ## Installing Dependencies
 
      
