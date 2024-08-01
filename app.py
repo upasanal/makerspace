@@ -16,6 +16,7 @@ engine_lock = threading.Lock()
 
 url = "http://192.168.149.1:8000/hello"
 api_url = " http://127.0.0.1:8000/mock_tour"
+action_test_url = "http://192.168.149.1:8000/test"
 
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[1].id)
@@ -75,7 +76,12 @@ def run_tour():
                 elif("turn" in text) or ("rotate" in text):
                     response = request_wrapper()
                     print(response)
-        
+
+                elif("test" in text): 
+                    response = request_wrapper()
+                    print(response)
+
+                    
                 else:
                     pass 
 
