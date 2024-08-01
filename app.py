@@ -2,9 +2,11 @@ import speech_recognition as sr
 import pyttsx3
 import sys
 import requests
-import threading
 from threading import Thread
+import threading
 import time
+import multiprocessing
+from multiprocessing import Process
 
 
 
@@ -13,73 +15,89 @@ engine = pyttsx3.init()
 engine_lock = threading.Lock()
 
 url = "http://192.168.149.1:8000/hello"
+api_url = " http://127.0.0.1:8000/mock_tour"
 
 voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[8].id)
+engine.setProperty('voice', voices[0].id)
 engine.say("makerspace tour demo code")
 engine.runAndWait()
 
 
+#Request wrapper function for multiprocessing
+def request_wrapper() -> requests: 
+    r = requests.post(api_url)
+    print(r)
+    print("This may or may not work")
+    return r
 
-def request_wrapper(): 
-    requests.post(url)
-    
+
+#Meat of the program reads the script
 def virtual_tour():
-    file = open('tour.txt',"r") #read script
-    
-    
+    file = open('tour.txt',"r") 
     for line in file: 
-        
-        
-            engine.say(line)
-            engine.runAndWait()
+        engine.say(line)
+        print(line)
+        engine.runAndWait()
          
         
     file.close()
 
+#Event loop for the program, busywait for someone to ask for a tour
+def run_tour():
+    recognizer = sr.Recognizer()
 
-while True: 
-    
-    
-    try:
-        with sr.Microphone() as mic: 
-            recognizer.adjust_for_ambient_noise(mic, duration=0.2)
-            audio = recognizer.listen(mic)
-            
-            text = recognizer.recognize_google(audio)
-            text = text.lower()
-            
-            if ("hello" or "hi") and "robot" in text:
-                response = requests.post(url)
-                print(response)
-                
-            elif ("tour" and "makerspace") in text:
-                
-                
-                Thread(target=request_wrapper).start()
-                Thread(target=virtual_tour).start()
-                
-                
-                
-                
-            elif("turn" in text) or ("rotate" in text):
-                response = requests.post(url)
-                print(response)
-    
-            else:
-                pass 
-            print(f"{text}")
-            sys.stdout.flush()
-            
-    except sr.UnknownValueError: 
+    while True: 
         
-        recognizer = sr.Recognizer()
-        continue
-    
-    except sr.RequestError as e: 
-        print("Google server problem")
-        sys.stdout.flush()
-        continue
+        
+        try:
+            with sr.Microphone() as mic: 
+                recognizer.adjust_for_ambient_noise(mic, duration=0.2)
+                audio = recognizer.listen(mic)
+                
+                text = recognizer.recognize_google(audio)
+                text = text.lower()
+                
+                if ("hello" or "hi") and "robot" in text:
+                    response = requests.post(url)
+                    print(response)
+                    
+                elif ("tour" and "makerspace") in text:
+                    
+                    
+                    rwp = Process(target=request_wrapper)
+                    vtp = Process(target=virtual_tour)
+
+                    vtp.start()
+                    rwp.start()
+
+                    rwp.join()
+                    vtp.join()
+                    
+                    
+                    
+                    
+                elif("turn" in text) or ("rotate" in text):
+                    response = request_wrapper()
+                    print(response)
+        
+                else:
+                    pass 
+                print(f"{text}")
+                sys.stdout.flush()
+                
+        except sr.UnknownValueError: 
+            
+            recognizer = sr.Recognizer()
+            continue
+        
+        except sr.RequestError as e: 
+            print("Google server problem")
+            sys.stdout.flush()
+            continue
 
 
 
+#would not be possible without this right here because of windows
+if __name__ == "__main__":
+
+    run_tour()
