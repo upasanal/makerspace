@@ -19,19 +19,18 @@ api_url = " http://127.0.0.1:8000/mock_tour"
 action_test_url = "http://192.168.149.1:8000/test"
 
 voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[1].id)
-engine.say("makerspace tour demo code")
-engine.runAndWait()
+engine.setProperty('voice', voices[8].id)
+
 
 
 #Request wrapper function for multiprocessing
-def request_wrapper() -> requests: 
-    r = requests.post(api_url)
+def request_wrapper(u : str) -> requests: 
+    r = requests.post(u)
     return r
 
 
 #Meat of the program reads the script
-def virtual_tour():
+def virtual_tour() -> None:
     file = open('tour.txt',"r") 
     for line in file: 
         engine.say(line)
@@ -42,7 +41,7 @@ def virtual_tour():
     file.close()
 
 #Event loop for the program, busywait for someone to ask for a tour
-def run_tour():
+def run_tour() -> None:
     recognizer = sr.Recognizer()
 
     while True: 
@@ -62,7 +61,7 @@ def run_tour():
                 elif ("tour" and "makerspace") in text:
                     
                     #Seperate processes for running tour and robot code
-                    rwp = Process(target=request_wrapper)
+                    rwp = Process(target=request_wrapper,args=[url])
                     vtp = Process(target=virtual_tour)
 
                     vtp.start()
