@@ -18,7 +18,7 @@ url = "http://192.168.149.1:8000/hello"
 api_url = " http://127.0.0.1:8000/mock_tour"
 
 voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[0].id)
+engine.setProperty('voice', voices[1].id)
 engine.say("makerspace tour demo code")
 engine.runAndWait()
 
@@ -26,8 +26,6 @@ engine.runAndWait()
 #Request wrapper function for multiprocessing
 def request_wrapper() -> requests: 
     r = requests.post(api_url)
-    print(r)
-    print("This may or may not work")
     return r
 
 
@@ -36,8 +34,8 @@ def virtual_tour():
     file = open('tour.txt',"r") 
     for line in file: 
         engine.say(line)
-        print(line)
         engine.runAndWait()
+        print(line)
          
         
     file.close()
@@ -58,8 +56,7 @@ def run_tour():
                 text = text.lower()
                 
                 if ("hello" or "hi") and "robot" in text:
-                    response = requests.post(url)
-                    print(response)
+                    request_wrapper()
                     
                 elif ("tour" and "makerspace") in text:
                     
@@ -73,8 +70,7 @@ def run_tour():
                     rwp.join()
                     vtp.join()
                     
-                    
-                    
+                
                     
                 elif("turn" in text) or ("rotate" in text):
                     response = request_wrapper()
