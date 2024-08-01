@@ -46,7 +46,7 @@ def run_tour():
 
     while True: 
         
-        
+        #Microphone
         try:
             with sr.Microphone() as mic: 
                 recognizer.adjust_for_ambient_noise(mic, duration=0.2)
@@ -60,7 +60,7 @@ def run_tour():
                     
                 elif ("tour" and "makerspace") in text:
                     
-                    
+                    #Seperate processes for running tour and robot code
                     rwp = Process(target=request_wrapper)
                     vtp = Process(target=virtual_tour)
 
@@ -78,6 +78,8 @@ def run_tour():
         
                 else:
                     pass 
+
+
                 print(f"{text}")
                 sys.stdout.flush()
                 
@@ -93,7 +95,7 @@ def run_tour():
 
 
 
-#would not be possible without this right here because of windows
+#would not be possible without this right here because of windows lack of forking
 if __name__ == "__main__":
 
     run_tour()
