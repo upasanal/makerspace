@@ -7,6 +7,10 @@ import threading
 import time
 import multiprocessing
 from multiprocessing import Process
+import pvporcupine
+import struct
+import pyaudio
+import winsound
 
 
 
@@ -19,9 +23,11 @@ api_url = " http://127.0.0.1:8000/mock_tour"
 action_test_url = "http://192.168.149.1:8000/test"
 
 voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[8].id)
+engine.setProperty('voice', voices[0].id)
 
 
+def chirp():
+    winsound.Beep(500,100)
 
 #Request wrapper function for multiprocessing
 def request_wrapper(u : str) -> requests: 
@@ -100,7 +106,58 @@ def run_tour() -> None:
 
 
 
+def active_word(): 
+    porcupoine = None 
+    pa = None 
+    audio_stream = None 
+
+
+
+
+    try:
+        porcupoine = pvporcupine.create(keywords=["computer","jarvis"])
+        pa = pyaudio.PyAudio()
+        audio_stream = pa.open(
+            rate=porcupoine.sample_rate,
+            channels=1, 
+            format=pyaudio.paInt16,
+            input = True,
+            frames_per_buffer=porcupoine.frame_length
+            )
+        
+    
+        while (True):
+            pcm = audio_stream.read(porcupoine.frame_length)
+            pcm = struct.unpack_from("h" * porcupoine.frame_length, pcm)
+
+
+            keyword_index = porcupoine.process(pcm)
+            if keyword_index >= 0: 
+                chirp()
+                print("Word detected, now Listening")
+
+                run_tour()
+                time.sleep(1)
+
+    
+
+    finally:
+        if porcupoine is not None: 
+            porcupoine.delete()
+        
+        if audio_stream is not None: 
+            audio_stream.close()
+
+        if pa is not None:
+            pa.terminate()
+
+
+
+
+
+        
+
 #would not be possible without this right here because of windows lack of forking
 if __name__ == "__main__":
-
-    run_tour()
+    active_word()
+    
