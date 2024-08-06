@@ -11,16 +11,17 @@ import pvporcupine
 import struct
 import pyaudio
 import winsound
-
+from dotenv import load_dotenv
+import os
 
 
 recognizer = sr.Recognizer()
 engine = pyttsx3.init()
 engine_lock = threading.Lock()
 
-url = "http://192.168.149.1:8000/hello"
-api_url = " http://127.0.0.1:8000/mock_tour"
-action_test_url = "http://192.168.149.1:8000/test"
+url = os.getenv("URL")
+api_url = os.getenv("API_URL")
+action_test_url = os.getenv("ACTION_TEST_URL")
 
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[0].id)
