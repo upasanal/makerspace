@@ -1,7 +1,13 @@
-# Automated Makerspace Tour - Quickstart Quide
+# Automated Voice-Activated Virtual Makerspace Tour System - Quickstart Quide
 
-This is a project aimed to automate the makerspace tour when the makerspace is unmanned. 
-The aim is to use speech recognition and basic http (fastapi) requests to communicate with the TonyPI robot.
+This is a Python-based voice-activated virtual tour system using Google Speech Recognition API and text-to-speech. The custom Flask API being used to control a HiWonder Raspberry Pi robot is not included in the repository. 
+
+## Highlighted Features
+
+- Voice recognition (Google Speech Recognition API via SpeechRecognition library)
+- Text-to-speech (pyttsx3)
+- Custom Flask API for Raspberry Pi integration
+- FastAPI for simulating robot endpoints for off-premise testing
 
 ## Getting Started
 
